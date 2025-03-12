@@ -1,0 +1,41 @@
+----------------------------------------------------------------
+
+Project:
+	1. Setup and Basic Layout
+		-Set up a React Project
+		-Install Material-UI (MUI) and create a basic layout (Header, Footer, Main Content)
+	2. Integrate WoW API
+		-Research WoW API and figure out whcih endpoints to use.
+		-Fetch data from the API and display in a simple format (e.g., a table or a list).
+	3. Styling and UI Improvements
+		-Once basic data is displayed, start making the site look better with MUI components.
+		-Add a responsive layout (so it looks good on mobile and desktop).
+	4. Add Graphs and Advanced Features
+		-Integrate a chart library like 'Chart.js' for displaying stats visually.
+		-Consider adding filters or other interactive elements to allow users to explore data in more ways.
+
+----------------------------------------------------------------
+
+Milestones:
+	Week 1: Set up React, Material-UI, and build a basic layout.
+	Week 2: Fetch data from the WoW API and display on the site.
+	Week 3: Style the layout an add simple tables
+	Week 4: Integrate charts and add filters
+
+----------------------------------------------------------------
+
+---
+Notes:
+---
+React with Material-UI (MUI)
+	Set up and install to use react and MUI components to style, customize and set-up website.
+	Best way to make a visually pleasing website.
+	Integrate charts and leaderboards
+
+How to put the website online for others to view?
+How to move website from GitHub to public? 
+Is it safe to make GitHub code public? With API keys? Sensitive code?
+fetch or Axios to make API calls?
+Explore other MUI components (like Snackbar, Dialog, Accordion) to enahnce user experience.
+Use templates or starter code?
+----------------------------------------------------------------
