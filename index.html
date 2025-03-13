@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WoW Mythic+ Leaderboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Hero Section with Navbar -->
+  <header class="hero-section">
+    <div class="hero-content">
+      <h1>World of Warcraft Mythic+ Leaderboard</h1>
+      <p>Track the best runs and stats across WoW Mythic dungeons</p>
+    </div>
+    
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+      <ul>
+        <li><a href="#leaderboard">Leaderboard</a></li>
+        <li><a href="#statistics">Statistics</a></li>
+        <li><a href="#charts">Charts</a></li>
+        <li><a href="#profile">Profile</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Leaderboard Section -->
+  <section id="leaderboard" class="leaderboard">
+    <h2>Top Mythic+ Runs</h2>
+    <!-- Sample Data -->
+    <table>
+      <thead>
+        <tr>
+          <th>Rank</th>
+          <th>Player</th>
+          <th>Dungeon</th>
+          <th>Time</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>Thrall</td>
+          <td>Theater of Pain</td>
+          <td>25m 45s</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Jaina</td>
+          <td>Sanguine Depths</td>
+          <td>26m 12s</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>Varian</td>
+          <td>Spire of Ascension</td>
+          <td>27m 03s</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Statistics Section -->
+  <section id="statistics" class="statistics">
+    <h2>Player Statistics</h2>
+    <!-- Your statistics content here -->
+  </section>
+
+  <!-- Charts Section -->
+  <section id="charts" class="charts">
+    <h2>Dungeon Completion Times</h2>
+    <canvas id="completionChart"></canvas>
+  </section>
+
+  <!-- Profile Section -->
+  <section id="profile" class="profile">
+    <h2>Your Profile</h2>
+    <!-- Your profile content here -->
+  </section>
+
+  <footer>
+    <p>Designed with love for World of Warcraft fans</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

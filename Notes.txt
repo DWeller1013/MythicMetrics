@@ -24,6 +24,99 @@ Milestones:
 
 ----------------------------------------------------------------
 
+Key Design Elements:
+	
+	Colors:
+		Draw from WoW faction colors (Blue/Gold for Alliance, Red/Black for Horde)
+		Dungeon Themes (Red/Gold for Uldir, blue/green for The Eternal Palace)
+
+	Typography:
+		-Use medieval-style fonts (Cinzel, Garamond) for headers, and clean sans-serif fonts (Roboto, Helvetica) for body text
+
+	Textures:
+		-Parchment, stone, and wood textures for backgrounds.
+
+	Icons:
+		-Use WoW-inspired icons or create your own based on in-game items, dungeons, or classes.
+
+	Layout:
+		-Keep a dark, bold layout with gold or silver highlights for prestige, and use clear visual hierachies for leaderboards and stats.
+
+----------------------------------------------------------------
+
+Database Design:
+
+	Example Schema:
+	
+	players: Player Information (e.g., name, realm, class, etc.)
+	leaderboards: Leaderboard data (e.g., best dungeon times, team composition, etc.)
+	dungeons: Dungeon details (e.g., dungeon name, difficulty, etc.)
+	stats: Historical statistics (e.g., rankings, class/spec winrates, etc.)
+	timestamps: Store the date and time for each update, enabling time-based analysis
+
+----------------------------------------------------------------
+
+Caching and data storage strategy to minimize frequency of API calls:
+
+	1. Cache the API Data
+		-In-memory Caching (e.g., using Redis or Memcached)
+			~Store the data temporarily in a memory-based cache (like Redis). When a request comes in for a specific piece of data,
+			 check if it's in the cache first. If it's not, then fetch it from the WoW Mythic API, cache it, and serve it.
+			~Set an expiration time (TTL - Time to Live) on the cache to refresh the data periodically. 
+			 (e.g., 5 minutes, 30 minutes, or 1 hour depending on how often you need updates)
+		-Database Caching (e.g., using SQL or NoSQL)
+			~Store the API responses in your database (MySQL, PostgreSQL, MongoDB, etc.) Every time the API is called, check if the
+			 data already exists in the database and is not oudated.
+			~Set a timestamp for when the data was last update and set logic to refresh it after a certain time.
+
+	2. Rate Limiting & Request Optimization
+		-Batching Requests: Instead of making individual API calls for each request, try to batch thme where possible (for example, if the API allows bulk fetching of data).
+		-Webhooks or Event-Based Updates: Some APIs provide the ability to push data to you via webhooks or notify you when new data is available. 
+
+	3. Use Conditional Requests (If Supported)
+		-If the WoW API supports conditional request using 'ETags' or 'Last-Modified' headers, you can use those to only request new data if it has changes.
+
+	4. Data Expiration and Refresh Strategy 
+		-Stale-While-Revalidate: Allows your website to serve the cached data while simultaneously refreshng the cache in the background. 
+		-Timed Refresh: Set a scheduled task (e.g., using cron jobs) to update the data at certain intervals (e.g., every 15 minutes or hourly).
+
+	5. Consider Rate Limiting and Retry Logic
+		-Exponential Backoff: If your app exceeds the rate limit, you can implement an exponential backoff strategy to retry requests after progressively longer delays.
+
+	6. Tracking API Usage
+		-Implement tracking of your API usage (e.g., logging the number of requests made in a given period). Help avoid going over request limit.
+
+	7. Consider a Hybrid Approach
+		-Combination of caching and database storage
+			~Cache frequently accessed data (e.g., leaderbaoard stats, player profiles)
+			~For less common or more dynamic data, pull it directly from the API but with frequent caching
+
+----
+
+Example Flow for Caching:
+	
+	1. Check Cach: When a user requests data, first check your cache (Redis or database)
+		~If data exists and is not expired, return it directly
+		~If not, make the API call
+
+	2. Make API Request (if needed): If the data is not cached, fetch the data from the WoW Mythic API.
+	
+	3. Store Data: After getting the data, store it in the cache or database with an expiration timestamp.
+
+	4. Return Data: Serve the data to the user.
+
+	5. Repeat: This process repeats for each request, ensuring that the API limit is respected and the data remains reasonably up-to-date.
+
+---
+
+Example Cache Logic:
+	
+	Cache: Store players data for 30 minutes.
+	API Call: If no cached data is found or the cached data has expired, call the WoW API.
+	Database Storage: Store the result in the database with the teimstamp and set a TTL of 30 minutes for the cache. 
+
+----------------------------------------------------------------
+
 ---
 Notes:
 ---
@@ -36,6 +129,8 @@ How to put the website online for others to view?
 How to move website from GitHub to public? 
 Is it safe to make GitHub code public? With API keys? Sensitive code?
 fetch or Axios to make API calls?
+Use SQL for database to store data. (See example schema above)
 Explore other MUI components (like Snackbar, Dialog, Accordion) to enahnce user experience.
 Use templates or starter code?
-----------------------------------------------------------------
+Chart.js or D3.js for data visualizations.
+----------------------------------------------------------------i
