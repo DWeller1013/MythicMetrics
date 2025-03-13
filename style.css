@@ -47,7 +47,7 @@ header .hero-content p {
 }
 
 .navbar li {
-  display: inline-block;
+   display: inline-block;
 }
 
 .navbar a {
@@ -106,6 +106,26 @@ table th {
 table tr:nth-child(even) {
   background-color: #333;
 }
+
+/* Class-specific row colors */
+.warlock {
+  color: #da1cfc; /* Purple color for Warlock */
+}
+
+.shaman {
+  color: #2d1cfc; /* Blue color for Shaman */
+}
+
+.paladin {
+  color: #fc5ad0; /* Gold color for Paladin */
+}
+
+.hunter {
+  color: #5afc6e; /* Green color for Hunter */
+}
+
+/* Add other classes here (you can use similar colors for each class) */
+
 
 /* Footer */
 footer {
