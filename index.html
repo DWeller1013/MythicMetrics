@@ -29,110 +29,144 @@
   <!-- Leaderboard Section -->
   <section id="leaderboard" class="leaderboard">
     <h2>Top Mythic+ Runs</h2>
-    <!-- Sample Data -->
-    <table>
+    
+    <!-- Filtering Controls -->
+    <div class="filter-controls">
+      <div class="filter-group">
+        <label for="keyLevel">Key Level:</label>
+        <select id="keyLevel" onchange="filterLeaderboard()">
+          <option value="all">All Levels</option>
+          <option value="1-6">M1-6 (Low Keys)</option>
+          <option value="7-11">M7-11 (Mid Keys)</option>
+          <option value="12-15">M12-15 (High Keys)</option>
+          <option value="16-20">M16-20 (Very High Keys)</option>
+          <option value="21+">M21+ (Extreme Keys)</option>
+        </select>
+      </div>
+      
+      <div class="filter-group">
+        <label for="classFilter">Class:</label>
+        <select id="classFilter" onchange="filterLeaderboard()">
+          <option value="all">All Classes</option>
+          <option value="death-knight">Death Knight</option>
+          <option value="demon-hunter">Demon Hunter</option>
+          <option value="druid">Druid</option>
+          <option value="evoker">Evoker</option>
+          <option value="hunter">Hunter</option>
+          <option value="mage">Mage</option>
+          <option value="monk">Monk</option>
+          <option value="paladin">Paladin</option>
+          <option value="priest">Priest</option>
+          <option value="rogue">Rogue</option>
+          <option value="shaman">Shaman</option>
+          <option value="warlock">Warlock</option>
+          <option value="warrior">Warrior</option>
+        </select>
+      </div>
+      
+      <div class="filter-group">
+        <label for="dungeonFilter">Dungeon:</label>
+        <select id="dungeonFilter" onchange="filterLeaderboard()">
+          <option value="all">All Dungeons</option>
+          <option value="ara-kara">Ara-Kara, City of Echoes</option>
+          <option value="city-of-threads">City of Threads</option>
+          <option value="dawnbreaker">The Dawnbreaker</option>
+          <option value="stonevault">The Stonevault</option>
+          <option value="mists">Mists of Tirna Scithe</option>
+          <option value="necrotic-wake">The Necrotic Wake</option>
+          <option value="siege">Siege of Boralus</option>
+          <option value="grim-batol">Grim Batol</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Enhanced Leaderboard Table -->
+    <table id="leaderboardTable">
       <thead>
         <tr>
-          <th>Rank</th>
-          <th>Player</th>
-          <th>Dungeon</th>
-          <th>Time</th>
-          <th>Affixes</th>
+          <th onclick="sortTable(0)">Rank</th>
+          <th onclick="sortTable(1)">Player</th>
+          <th onclick="sortTable(2)">Class</th>
+          <th onclick="sortTable(3)">Spec</th>
+          <th onclick="sortTable(4)">Dungeon</th>
+          <th onclick="sortTable(5)">Level</th>
+          <th onclick="sortTable(6)">Time</th>
+          <th onclick="sortTable(7)">Score</th>
+          <th>Talents</th>
+          <th>Gear</th>
         </tr>
       </thead>
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td class="warlock">Arbark</td>
-          <td>Deadmines +20</td>
-          <td>12m 45s</td>
-          <td>Fortified, Tyrannical, Sanguine</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Thrall</td>
-          <td>Theater of Pain +15</td>
-          <td>25m 45s</td>
-          <td>Tyrannical, Fortified, Sanguine</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>Jaina</td>
-          <td>Sanguine Depths +10</td>
-          <td>26m 12s</td>
-          <td>Fortified, Tyrannical, Sanguine</td>
-        </tr>
-        <tr>
-          <td>4</td>
-          <td>Varian</td>
-          <td>Spire of Ascension +3</td>
-          <td>27m 03s</td>
-          <td>Tyrannical, Fortified, Sanguine</td>
-        </tr>
+      <tbody id="leaderboardBody">
+        <!-- Data will be populated by JavaScript -->
       </tbody>
     </table>
   </section>
 
   <!-- Statistics Section -->
   <section id="statistics" class="statistics">
-    <h2>Player Statistics</h2>
-    <!-- Your statistics content here -->
-	<table>
-		<thead>
-			<tr>
-				<th>Rank</th>
-				<th>Player</th>
-				<th>Server</th>
-				<th>Class</th>
-				<th>Specialization</th>
-				<th>Item Level</th>
-				<th>Mythic+ Score</th>
-				<th>Talents</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr class="warlock">
-				<td>1</td>
-				<td>Arbark</td>
-				<td>Lothar</td>
-				<td>Warlock</td>
-				<td>Destruction</td>
-				<td>699</td>
-				<td>9000</td>
-				<td>Talents</td>
-			</tr>
-			<tr class="shaman">
-				<td>2</td>
-				<td>Totemicrage</td>
-				<td>Lothar</td>
-				<td>Shaman</td>
-				<td>Restoration</td>
-				<td>605</td>
-				<td>2000</td>
-				<td>Talents</td>
-			</tr>
-			<tr class="paladin">
-				<td>3</td>
-				<td>Teuton</td>
-				<td>Lothar</td>
-				<td>Paladin</td>
-				<td>Retribution</td>
-				<td>598</td>
-				<td>1000</td>
-				<td>Talents</td>
-			</tr>
-			<tr class="hunter">
-				<td>4</td>
-				<td>Cerren</td>
-				<td>Grizzly Hills</td>
-				<td>Hunter</td>
-				<td>Survival</td>
-				<td>102</td>
-				<td>128</td>
-				<td>Talents</td>
-			</tr>
-		</tbody>
-	</table>
+    <h2>Class & Specialization Analytics</h2>
+    
+    <!-- Key Level Selection for Analytics -->
+    <div class="analytics-controls">
+      <label for="analyticsKeyLevel">Analyze Key Level:</label>
+      <select id="analyticsKeyLevel" onchange="updateAnalytics()">
+        <option value="all">All Levels</option>
+        <option value="1-6">M1-6 (Low Keys)</option>
+        <option value="7-11">M7-11 (Mid Keys)</option>
+        <option value="12-15">M12-15 (High Keys)</option>
+        <option value="16-20">M16-20 (Very High Keys)</option>
+        <option value="21+">M21+ (Extreme Keys)</option>
+      </select>
+    </div>
+
+    <div class="analytics-grid">
+      <!-- Class Distribution Chart -->
+      <div class="analytics-card">
+        <h3>Class Distribution</h3>
+        <canvas id="classDistributionChart"></canvas>
+      </div>
+
+      <!-- Specialization Popularity -->
+      <div class="analytics-card">
+        <h3>Top Specializations</h3>
+        <canvas id="specPopularityChart"></canvas>
+      </div>
+
+      <!-- Success Rate by Role -->
+      <div class="analytics-card">
+        <h3>Success Rate by Role</h3>
+        <canvas id="roleSuccessChart"></canvas>
+      </div>
+
+      <!-- Average Score by Class -->
+      <div class="analytics-card">
+        <h3>Average M+ Score by Class</h3>
+        <canvas id="classScoreChart"></canvas>
+      </div>
+    </div>
+
+    <!-- Top Players Table -->
+    <div class="top-players-section">
+      <h3>Top Players by M+ Score</h3>
+      <table class="top-players-table">
+        <thead>
+          <tr>
+            <th>Rank</th>
+            <th>Player</th>
+            <th>Server</th>
+            <th>Class</th>
+            <th>Specialization</th>
+            <th>Item Level</th>
+            <th>M+ Score</th>
+            <th>Best Run</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="topPlayersBody">
+          <!-- Data will be populated by JavaScript -->
+        </tbody>
+      </table>
+    </div>
   </section>
 
   <!-- Charts Section -->
@@ -150,6 +184,42 @@
   <footer>
     <p>Designed with love for World of Warcraft fans</p>
   </footer>
+
+  <!-- Modal for Talent Trees -->
+  <div id="talentModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="talentModalTitle">Talent Tree</h2>
+        <span class="close" onclick="closeModal('talentModal')">&times;</span>
+      </div>
+      <div class="modal-body">
+        <div id="talentTreeContainer">
+          <!-- Talent tree will be populated here -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for Gear Inspection -->
+  <div id="gearModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="gearModalTitle">Equipment</h2>
+        <span class="close" onclick="closeModal('gearModal')">&times;</span>
+      </div>
+      <div class="modal-body">
+        <div id="gearContainer">
+          <!-- Gear will be populated here -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading overlay -->
+  <div id="loadingOverlay" class="loading-overlay">
+    <div class="loading-spinner"></div>
+    <p>Loading data...</p>
+  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="app.js"></script>
