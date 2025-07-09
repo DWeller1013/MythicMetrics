@@ -76,38 +76,231 @@ let classDistributionChart, specPopularityChart, roleSuccessChart, classScoreCha
 
 // Initialize the application
 document.addEventListener('DOMContentLoaded', function() {
+  initializeParticles();
+  initializeAOS();
+  initializeLucide();
   initializeLeaderboard();
   initializeAnalytics();
   initializeCharts();
+  initializeModernFeatures();
 });
+
+// Initialize particles.js background
+function initializeParticles() {
+  if (typeof particlesJS !== 'undefined') {
+    particlesJS('particles-js', {
+      particles: {
+        number: {
+          value: 80,
+          density: {
+            enable: true,
+            value_area: 800
+          }
+        },
+        color: {
+          value: '#FFD700'
+        },
+        shape: {
+          type: 'circle',
+          stroke: {
+            width: 0,
+            color: '#000000'
+          }
+        },
+        opacity: {
+          value: 0.3,
+          random: false,
+          anim: {
+            enable: false,
+            speed: 1,
+            opacity_min: 0.1,
+            sync: false
+          }
+        },
+        size: {
+          value: 3,
+          random: true,
+          anim: {
+            enable: false,
+            speed: 40,
+            size_min: 0.1,
+            sync: false
+          }
+        },
+        line_linked: {
+          enable: true,
+          distance: 150,
+          color: '#FFD700',
+          opacity: 0.2,
+          width: 1
+        },
+        move: {
+          enable: true,
+          speed: 2,
+          direction: 'none',
+          random: false,
+          straight: false,
+          out_mode: 'out',
+          bounce: false,
+          attract: {
+            enable: false,
+            rotateX: 600,
+            rotateY: 1200
+          }
+        }
+      },
+      interactivity: {
+        detect_on: 'canvas',
+        events: {
+          onhover: {
+            enable: true,
+            mode: 'repulse'
+          },
+          onclick: {
+            enable: true,
+            mode: 'push'
+          },
+          resize: true
+        },
+        modes: {
+          grab: {
+            distance: 400,
+            line_linked: {
+              opacity: 1
+            }
+          },
+          bubble: {
+            distance: 400,
+            size: 40,
+            duration: 2,
+            opacity: 8,
+            speed: 3
+          },
+          repulse: {
+            distance: 200,
+            duration: 0.4
+          },
+          push: {
+            particles_nb: 4
+          },
+          remove: {
+            particles_nb: 2
+          }
+        }
+      },
+      retina_detect: true
+    });
+  }
+}
+
+// Initialize AOS (Animate On Scroll)
+function initializeAOS() {
+  if (typeof AOS !== 'undefined') {
+    AOS.init({
+      duration: 800,
+      easing: 'ease-in-out',
+      once: true,
+      offset: 120,
+      delay: 100
+    });
+  }
+}
+
+// Initialize Lucide icons
+function initializeLucide() {
+  if (typeof lucide !== 'undefined') {
+    lucide.createIcons();
+  }
+}
+
+// Initialize modern features
+function initializeModernFeatures() {
+  // Add active nav state management
+  const navLinks = document.querySelectorAll('.nav-link');
+  const sections = document.querySelectorAll('section[id]');
+  
+  // Smooth scroll and active state management
+  window.addEventListener('scroll', () => {
+    let current = '';
+    
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop - 200;
+      if (scrollY >= sectionTop) {
+        current = section.getAttribute('id');
+      }
+    });
+    
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === `#${current}`) {
+        link.classList.add('active');
+      }
+    });
+  });
+  
+  // Enhanced table sorting with animations
+  addTableSortingAnimations();
+  
+  // Add skeleton loading for better UX
+  addSkeletonLoading();
+  
+  // Add enhanced tooltips
+  addEnhancedTooltips();
+}
 
 // Initialize leaderboard
 function initializeLeaderboard() {
   populateLeaderboard(leaderboardData);
 }
 
-// Populate leaderboard table
+// Populate leaderboard table with enhanced animations
 function populateLeaderboard(data) {
   const tbody = document.getElementById('leaderboardBody');
-  tbody.innerHTML = '';
   
-  data.forEach(run => {
-    const row = document.createElement('tr');
-    row.className = run.class;
-    row.innerHTML = `
-      <td>${run.rank}</td>
-      <td>${run.player}</td>
-      <td><span class="${run.class}">${run.class.charAt(0).toUpperCase() + run.class.slice(1).replace('-', ' ')}</span></td>
-      <td>${run.spec}</td>
-      <td>${run.dungeon}</td>
-      <td>+${run.level}</td>
-      <td>${run.time}</td>
-      <td>${run.score.toLocaleString()}</td>
-      <td><button class="action-btn talent-btn" onclick="showTalents('${run.player}')">View</button></td>
-      <td><button class="action-btn gear-btn" onclick="showGear('${run.player}')">Inspect</button></td>
-    `;
-    tbody.appendChild(row);
-  });
+  // Add fade out animation before updating
+  tbody.style.opacity = '0';
+  tbody.style.transform = 'translateY(20px)';
+  
+  setTimeout(() => {
+    tbody.innerHTML = '';
+    
+    data.forEach((run, index) => {
+      const row = document.createElement('tr');
+      row.className = run.class;
+      row.style.opacity = '0';
+      row.style.transform = 'translateY(20px)';
+      row.innerHTML = `
+        <td><span class="rank-badge">${run.rank}</span></td>
+        <td>
+          <div class="player-info">
+            <span class="player-name">${run.player}</span>
+            <span class="server-name">${run.server || 'Unknown'}</span>
+          </div>
+        </td>
+        <td><span class="class-badge ${run.class}">${run.class.charAt(0).toUpperCase() + run.class.slice(1).replace('-', ' ')}</span></td>
+        <td><span class="spec-name">${run.spec}</span></td>
+        <td><span class="dungeon-name">${run.dungeon}</span></td>
+        <td><span class="key-level">+${run.level}</span></td>
+        <td><span class="completion-time">${run.time}</span></td>
+        <td><span class="mythic-score">${run.score.toLocaleString()}</span></td>
+        <td><button class="action-btn talent-btn hover-lift" onclick="showTalents('${run.player}')">View</button></td>
+        <td><button class="action-btn gear-btn hover-lift" onclick="showGear('${run.player}')">Inspect</button></td>
+      `;
+      tbody.appendChild(row);
+      
+      // Staggered animation for each row
+      setTimeout(() => {
+        row.style.opacity = '1';
+        row.style.transform = 'translateY(0)';
+        row.style.transition = 'all 0.3s ease-out';
+      }, index * 50);
+    });
+    
+    // Fade in the tbody
+    tbody.style.opacity = '1';
+    tbody.style.transform = 'translateY(0)';
+    tbody.style.transition = 'all 0.3s ease-out';
+  }, 150);
 }
 
 // Filter leaderboard based on selections
@@ -350,30 +543,44 @@ function updateClassScoreChart(keyLevel) {
   });
 }
 
-// Populate top players table
+// Populate top players table with enhanced styling
 function populateTopPlayers() {
   const tbody = document.getElementById('topPlayersBody');
   tbody.innerHTML = '';
   
-  leaderboardData.slice(0, 10).forEach(player => {
+  leaderboardData.slice(0, 10).forEach((player, index) => {
     const row = document.createElement('tr');
     row.className = player.class;
     row.innerHTML = `
-      <td>${player.rank}</td>
-      <td>${player.player}</td>
-      <td>${player.server}</td>
-      <td><span class="${player.class}">${player.class.charAt(0).toUpperCase() + player.class.slice(1).replace('-', ' ')}</span></td>
-      <td>${player.spec}</td>
-      <td>${player.itemLevel}</td>
-      <td>${player.score.toLocaleString()}</td>
-      <td>${player.dungeon} +${player.level}</td>
       <td>
-        <button class="action-btn talent-btn" onclick="showTalents('${player.player}')">Talents</button>
-        <button class="action-btn gear-btn" onclick="showGear('${player.player}')">Gear</button>
+        <div class="rank-container">
+          <span class="rank-number">${player.rank}</span>
+          ${index < 3 ? `<i data-lucide="${index === 0 ? 'crown' : index === 1 ? 'medal' : 'award'}" class="rank-icon"></i>` : ''}
+        </div>
+      </td>
+      <td>
+        <div class="player-info">
+          <span class="player-name">${player.player}</span>
+        </div>
+      </td>
+      <td><span class="server-name">${player.server}</span></td>
+      <td><span class="class-badge ${player.class}">${player.class.charAt(0).toUpperCase() + player.class.slice(1).replace('-', ' ')}</span></td>
+      <td><span class="spec-name">${player.spec}</span></td>
+      <td><span class="item-level">${player.itemLevel}</span></td>
+      <td><span class="mythic-score">${player.score.toLocaleString()}</span></td>
+      <td><span class="best-run">${player.dungeon} +${player.level}</span></td>
+      <td>
+        <button class="action-btn talent-btn hover-lift" onclick="showTalents('${player.player}')">Talents</button>
+        <button class="action-btn gear-btn hover-lift" onclick="showGear('${player.player}')">Gear</button>
       </td>
     `;
     tbody.appendChild(row);
   });
+  
+  // Re-initialize Lucide icons for the newly added elements
+  if (typeof lucide !== 'undefined') {
+    lucide.createIcons();
+  }
 }
 
 // Initialize completion times chart
@@ -484,12 +691,165 @@ window.onclick = function(event) {
   });
 }
 
-// Smooth scroll behavior
+// Smooth scroll behavior with enhanced animation
 document.querySelectorAll('.navbar a').forEach(anchor => {
   anchor.addEventListener('click', function (e) {
     e.preventDefault();
-    document.querySelector(this.getAttribute('href')).scrollIntoView({
-      behavior: 'smooth'
-    });
+    const targetId = this.getAttribute('href');
+    const targetSection = document.querySelector(targetId);
+    
+    if (targetSection) {
+      const offsetTop = targetSection.offsetTop - 100;
+      
+      window.scrollTo({
+        top: offsetTop,
+        behavior: 'smooth'
+      });
+      
+      // Update active state
+      document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+      this.classList.add('active');
+    }
   });
 });
+
+// Enhanced table sorting animations
+function addTableSortingAnimations() {
+  // Add visual feedback for sortable columns
+  const sortableHeaders = document.querySelectorAll('.sortable');
+  sortableHeaders.forEach(header => {
+    header.addEventListener('click', function() {
+      // Add click animation
+      this.style.transform = 'scale(0.95)';
+      setTimeout(() => {
+        this.style.transform = 'scale(1)';
+      }, 150);
+      
+      // Show loading state briefly
+      const tbody = document.querySelector('#leaderboardTable tbody');
+      tbody.style.opacity = '0.5';
+      setTimeout(() => {
+        tbody.style.opacity = '1';
+      }, 300);
+    });
+  });
+}
+
+// Add skeleton loading for better UX
+function addSkeletonLoading() {
+  const loadingOverlay = document.getElementById('loadingOverlay');
+  
+  // Show loading when filtering
+  const originalFilterFunction = window.filterLeaderboard;
+  window.filterLeaderboard = function() {
+    loadingOverlay.style.display = 'flex';
+    setTimeout(() => {
+      originalFilterFunction();
+      loadingOverlay.style.display = 'none';
+    }, 500);
+  };
+}
+
+// Add enhanced tooltips
+function addEnhancedTooltips() {
+  // Add tooltips to action buttons
+  const actionButtons = document.querySelectorAll('.action-btn');
+  actionButtons.forEach(button => {
+    button.addEventListener('mouseenter', function() {
+      const tooltipText = this.classList.contains('talent-btn') ? 
+        'View talent build and specialization details' : 
+        'Inspect equipment and item levels';
+      
+      const tooltip = document.createElement('div');
+      tooltip.className = 'tooltip';
+      tooltip.textContent = tooltipText;
+      tooltip.style.cssText = `
+        position: absolute;
+        background: rgba(0, 0, 0, 0.9);
+        color: white;
+        padding: 8px 12px;
+        border-radius: 6px;
+        font-size: 0.75rem;
+        z-index: 1000;
+        pointer-events: none;
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 215, 0, 0.3);
+      `;
+      
+      document.body.appendChild(tooltip);
+      
+      const rect = this.getBoundingClientRect();
+      tooltip.style.left = rect.left + rect.width / 2 - tooltip.offsetWidth / 2 + 'px';
+      tooltip.style.top = rect.top - tooltip.offsetHeight - 8 + 'px';
+      
+      this.addEventListener('mouseleave', function() {
+        if (tooltip && tooltip.parentNode) {
+          tooltip.parentNode.removeChild(tooltip);
+        }
+      }, { once: true });
+    });
+  });
+}
+
+// Enhanced modal animations
+function showTalents(playerName) {
+  const player = leaderboardData.find(p => p.player === playerName);
+  if (!player) return;
+  
+  document.getElementById('talentModalTitle').textContent = `${playerName}'s Talents - ${player.spec} ${player.class.charAt(0).toUpperCase() + player.class.slice(1)}`;
+  
+  const talents = player.talents.split('|');
+  const container = document.getElementById('talentTreeContainer');
+  container.innerHTML = `
+    <div class="talent-tree">
+      ${talents.map((talent, index) => `
+        <div class="talent-slot selected hover-lift" style="animation-delay: ${index * 0.1}s">
+          <div class="talent-icon">${String.fromCharCode(9733)}</div>
+          <div class="talent-name">${talent}</div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+  
+  const modal = document.getElementById('talentModal');
+  modal.style.display = 'block';
+  
+  // Add entrance animation
+  setTimeout(() => {
+    modal.querySelector('.modal-content').style.animation = 'slideIn 0.3s ease-out';
+  }, 10);
+}
+
+// Enhanced gear modal
+function showGear(playerName) {
+  const player = leaderboardData.find(p => p.player === playerName);
+  if (!player) return;
+  
+  document.getElementById('gearModalTitle').textContent = `${playerName}'s Equipment - Item Level ${player.itemLevel}`;
+  
+  const container = document.getElementById('gearContainer');
+  container.innerHTML = `
+    <div class="gear-grid">
+      ${Object.entries(player.gear).map(([slot, item], index) => `
+        <div class="gear-slot hover-lift" style="animation-delay: ${index * 0.1}s">
+          <div class="gear-item">
+            <div class="gear-icon">${getSlotIcon(slot)}</div>
+            <div class="gear-info">
+              <h4>${item}</h4>
+              <p>Item Level: <span class="item-level">${player.itemLevel}</span></p>
+              <p>${slot.charAt(0).toUpperCase() + slot.slice(1)}</p>
+            </div>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+  
+  const modal = document.getElementById('gearModal');
+  modal.style.display = 'block';
+  
+  // Add entrance animation
+  setTimeout(() => {
+    modal.querySelector('.modal-content').style.animation = 'slideIn 0.3s ease-out';
+  }, 10);
+}

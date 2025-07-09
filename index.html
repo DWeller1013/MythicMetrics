@@ -4,37 +4,61 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>WoW Mythic+ Leaderboard</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- Particles Background -->
+  <div id="particles-js"></div>
+  
   <!-- Hero Section with Navbar -->
-  <header class="hero-section">
+  <header class="hero-section" data-aos="fade-down">
     <div class="hero-content">
-      <h1>World of Warcraft Mythic+ Leaderboard</h1>
-      <p>Track the best runs and stats across WoW Mythic dungeons</p>
+      <h1 class="hero-title">World of Warcraft Mythic+ Leaderboard</h1>
+      <p class="hero-subtitle">Track the best runs and stats across WoW Mythic dungeons</p>
+      <div class="hero-stats" data-aos="fade-up" data-aos-delay="200">
+        <div class="stat-card">
+          <div class="stat-number">10,247</div>
+          <div class="stat-label">Active Players</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">156,432</div>
+          <div class="stat-label">Tracked Runs</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">8</div>
+          <div class="stat-label">Dungeons</div>
+        </div>
+      </div>
     </div>
     
-    <!-- Navigation Bar -->
-    <nav class="navbar">
+    <!-- Enhanced Navigation Bar -->
+    <nav class="navbar" data-aos="fade-up" data-aos-delay="400">
       <ul>
-        <li><a href="#leaderboard">Leaderboard</a></li>
-        <li><a href="#statistics">Statistics</a></li>
-        <li><a href="#charts">Charts</a></li>
-        <li><a href="#profile">Profile</a></li>
+        <li><a href="#leaderboard" class="nav-link active"><i data-lucide="trophy"></i>Leaderboard</a></li>
+        <li><a href="#statistics" class="nav-link"><i data-lucide="bar-chart-3"></i>Statistics</a></li>
+        <li><a href="#charts" class="nav-link"><i data-lucide="trending-up"></i>Charts</a></li>
+        <li><a href="#profile" class="nav-link"><i data-lucide="user"></i>Profile</a></li>
       </ul>
     </nav>
   </header>
 
   <!-- Leaderboard Section -->
-  <section id="leaderboard" class="leaderboard">
-    <h2>Top Mythic+ Runs</h2>
+  <section id="leaderboard" class="leaderboard modern-section" data-aos="fade-up">
+    <div class="section-header">
+      <h2 class="section-title">Top Mythic+ Runs</h2>
+      <p class="section-subtitle">Discover the best players and their legendary runs</p>
+    </div>
     
-    <!-- Filtering Controls -->
-    <div class="filter-controls">
+    <!-- Advanced Filtering Controls -->
+    <div class="filter-controls glass-card" data-aos="fade-up" data-aos-delay="100">
       <div class="filter-group">
-        <label for="keyLevel">Key Level:</label>
-        <select id="keyLevel" onchange="filterLeaderboard()">
+        <label for="keyLevel" class="filter-label">
+          <i data-lucide="key"></i>
+          Key Level
+        </label>
+        <select id="keyLevel" onchange="filterLeaderboard()" class="modern-select">
           <option value="all">All Levels</option>
           <option value="1-6">M1-6 (Low Keys)</option>
           <option value="7-11">M7-11 (Mid Keys)</option>
@@ -45,8 +69,11 @@
       </div>
       
       <div class="filter-group">
-        <label for="classFilter">Class:</label>
-        <select id="classFilter" onchange="filterLeaderboard()">
+        <label for="classFilter" class="filter-label">
+          <i data-lucide="users"></i>
+          Class
+        </label>
+        <select id="classFilter" onchange="filterLeaderboard()" class="modern-select">
           <option value="all">All Classes</option>
           <option value="death-knight">Death Knight</option>
           <option value="demon-hunter">Demon Hunter</option>
@@ -65,8 +92,11 @@
       </div>
       
       <div class="filter-group">
-        <label for="dungeonFilter">Dungeon:</label>
-        <select id="dungeonFilter" onchange="filterLeaderboard()">
+        <label for="dungeonFilter" class="filter-label">
+          <i data-lucide="map"></i>
+          Dungeon
+        </label>
+        <select id="dungeonFilter" onchange="filterLeaderboard()" class="modern-select">
           <option value="all">All Dungeons</option>
           <option value="ara-kara">Ara-Kara, City of Echoes</option>
           <option value="city-of-threads">City of Threads</option>
@@ -81,35 +111,73 @@
     </div>
 
     <!-- Enhanced Leaderboard Table -->
-    <table id="leaderboardTable">
-      <thead>
-        <tr>
-          <th onclick="sortTable(0)">Rank</th>
-          <th onclick="sortTable(1)">Player</th>
-          <th onclick="sortTable(2)">Class</th>
-          <th onclick="sortTable(3)">Spec</th>
-          <th onclick="sortTable(4)">Dungeon</th>
-          <th onclick="sortTable(5)">Level</th>
-          <th onclick="sortTable(6)">Time</th>
-          <th onclick="sortTable(7)">Score</th>
-          <th>Talents</th>
-          <th>Gear</th>
-        </tr>
-      </thead>
-      <tbody id="leaderboardBody">
-        <!-- Data will be populated by JavaScript -->
-      </tbody>
-    </table>
+    <div class="table-container glass-card" data-aos="fade-up" data-aos-delay="200">
+      <table id="leaderboardTable" class="modern-table">
+        <thead>
+          <tr>
+            <th onclick="sortTable(0)" class="sortable">
+              <i data-lucide="hash"></i>
+              Rank
+            </th>
+            <th onclick="sortTable(1)" class="sortable">
+              <i data-lucide="user"></i>
+              Player
+            </th>
+            <th onclick="sortTable(2)" class="sortable">
+              <i data-lucide="shield"></i>
+              Class
+            </th>
+            <th onclick="sortTable(3)" class="sortable">
+              <i data-lucide="zap"></i>
+              Spec
+            </th>
+            <th onclick="sortTable(4)" class="sortable">
+              <i data-lucide="map-pin"></i>
+              Dungeon
+            </th>
+            <th onclick="sortTable(5)" class="sortable">
+              <i data-lucide="key"></i>
+              Level
+            </th>
+            <th onclick="sortTable(6)" class="sortable">
+              <i data-lucide="clock"></i>
+              Time
+            </th>
+            <th onclick="sortTable(7)" class="sortable">
+              <i data-lucide="star"></i>
+              Score
+            </th>
+            <th class="action-column">
+              <i data-lucide="eye"></i>
+              Talents
+            </th>
+            <th class="action-column">
+              <i data-lucide="package"></i>
+              Gear
+            </th>
+          </tr>
+        </thead>
+        <tbody id="leaderboardBody">
+          <!-- Data will be populated by JavaScript -->
+        </tbody>
+      </table>
+    </div>
   </section>
 
   <!-- Statistics Section -->
-  <section id="statistics" class="statistics">
-    <h2>Class & Specialization Analytics</h2>
+  <section id="statistics" class="statistics modern-section" data-aos="fade-up">
+    <div class="section-header">
+      <h2 class="section-title">Class & Specialization Analytics</h2>
+      <p class="section-subtitle">Deep dive into meta trends and performance metrics</p>
+    </div>
     
     <!-- Key Level Selection for Analytics -->
-    <div class="analytics-controls">
-      <label for="analyticsKeyLevel">Analyze Key Level:</label>
-      <select id="analyticsKeyLevel" onchange="updateAnalytics()">
+    <div class="analytics-controls glass-card" data-aos="fade-up" data-aos-delay="100">
+      <label for="analyticsKeyLevel" class="filter-label">
+        <i data-lucide="target"></i>
+        Analyze Key Level
+      </label>
+      <select id="analyticsKeyLevel" onchange="updateAnalytics()" class="modern-select">
         <option value="all">All Levels</option>
         <option value="1-6">M1-6 (Low Keys)</option>
         <option value="7-11">M7-11 (Mid Keys)</option>
@@ -121,51 +189,76 @@
 
     <div class="analytics-grid">
       <!-- Class Distribution Chart -->
-      <div class="analytics-card">
-        <h3>Class Distribution</h3>
-        <canvas id="classDistributionChart"></canvas>
+      <div class="analytics-card glass-card" data-aos="fade-up" data-aos-delay="200">
+        <div class="card-header">
+          <h3><i data-lucide="pie-chart"></i>Class Distribution</h3>
+          <div class="card-badge">Live Data</div>
+        </div>
+        <div class="chart-container">
+          <canvas id="classDistributionChart"></canvas>
+        </div>
       </div>
 
       <!-- Specialization Popularity -->
-      <div class="analytics-card">
-        <h3>Top Specializations</h3>
-        <canvas id="specPopularityChart"></canvas>
+      <div class="analytics-card glass-card" data-aos="fade-up" data-aos-delay="300">
+        <div class="card-header">
+          <h3><i data-lucide="bar-chart"></i>Top Specializations</h3>
+          <div class="card-badge trending">Trending</div>
+        </div>
+        <div class="chart-container">
+          <canvas id="specPopularityChart"></canvas>
+        </div>
       </div>
 
       <!-- Success Rate by Role -->
-      <div class="analytics-card">
-        <h3>Success Rate by Role</h3>
-        <canvas id="roleSuccessChart"></canvas>
+      <div class="analytics-card glass-card" data-aos="fade-up" data-aos-delay="400">
+        <div class="card-header">
+          <h3><i data-lucide="activity"></i>Success Rate by Role</h3>
+          <div class="card-badge success">High Success</div>
+        </div>
+        <div class="chart-container">
+          <canvas id="roleSuccessChart"></canvas>
+        </div>
       </div>
 
       <!-- Average Score by Class -->
-      <div class="analytics-card">
-        <h3>Average M+ Score by Class</h3>
-        <canvas id="classScoreChart"></canvas>
+      <div class="analytics-card glass-card" data-aos="fade-up" data-aos-delay="500">
+        <div class="card-header">
+          <h3><i data-lucide="trending-up"></i>Average M+ Score by Class</h3>
+          <div class="card-badge performance">Performance</div>
+        </div>
+        <div class="chart-container">
+          <canvas id="classScoreChart"></canvas>
+        </div>
       </div>
     </div>
 
     <!-- Top Players Table -->
-    <div class="top-players-section">
-      <h3>Top Players by M+ Score</h3>
-      <table class="top-players-table">
-        <thead>
-          <tr>
-            <th>Rank</th>
-            <th>Player</th>
-            <th>Server</th>
-            <th>Class</th>
-            <th>Specialization</th>
-            <th>Item Level</th>
-            <th>M+ Score</th>
-            <th>Best Run</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody id="topPlayersBody">
-          <!-- Data will be populated by JavaScript -->
-        </tbody>
-      </table>
+    <div class="top-players-section" data-aos="fade-up" data-aos-delay="600">
+      <div class="section-header">
+        <h3 class="subsection-title">Top Players by M+ Score</h3>
+        <p class="subsection-subtitle">The legends of Mythic+ dungeons</p>
+      </div>
+      <div class="table-container glass-card">
+        <table class="top-players-table modern-table">
+          <thead>
+            <tr>
+              <th><i data-lucide="medal"></i>Rank</th>
+              <th><i data-lucide="user"></i>Player</th>
+              <th><i data-lucide="server"></i>Server</th>
+              <th><i data-lucide="shield"></i>Class</th>
+              <th><i data-lucide="zap"></i>Specialization</th>
+              <th><i data-lucide="package"></i>Item Level</th>
+              <th><i data-lucide="star"></i>M+ Score</th>
+              <th><i data-lucide="trophy"></i>Best Run</th>
+              <th><i data-lucide="settings"></i>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="topPlayersBody">
+            <!-- Data will be populated by JavaScript -->
+          </tbody>
+        </table>
+      </div>
     </div>
   </section>
 
@@ -222,6 +315,9 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
